@@ -1,4 +1,5 @@
 import tkinter as tk
+# import classifier
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -41,10 +42,11 @@ class Application(tk.Frame):
         try:
             res = classifier.classify(self.moviename.get())
             self.response.configure(text=res_to_message(res))
-        except ValueError:
+        except ValueError as e:
             print("Oops! There was an issue processing the movie")
-        except Exception:
+        except Exception as e:
             self.response.configure(text=error_message)
+            print(e)
 
 root = tk.Tk()
 app = Application(master=root)
