@@ -29,17 +29,22 @@ class Application(tk.Frame):
         self.submit["command"] = self.classify
         self.submit.pack()
 
+        self.response = tk.Label(self)
+        self.response.pack()
+
         self.quit = tk.Button(self, text="QUIT", fg="red",
                               command=self.master.destroy)
         self.quit.pack(side="bottom")
 
     def classify(self):
         error_message = "Sorry, Link! I can't GIVE tropes. Come back when you're a little.... mmmmmmm... tropier!"
-        # try:
-        #   res = classifier.classify(self.moviename.get())
-        # except ValueError:
-        #   print("Oops! There was an issue processing the movie")
-        print("hi there, everyone!" + self.moviename.get())
+        try:
+            res = classifier.classify(self.moviename.get())
+            self.response.configure(text=res_to_message(res))
+        except ValueError:
+            print("Oops! There was an issue processing the movie")
+        except Exception:
+            self.response.configure(text=error_message)
 
 root = tk.Tk()
 app = Application(master=root)
